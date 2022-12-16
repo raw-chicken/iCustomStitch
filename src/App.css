@@ -11,13 +11,13 @@ body {
   margin: 0;
 }
 
-test { font-family: Amatic SC; font-size: 45px; font-style: normal; font-variant: bold; font-weight: 700; line-height: 50px; } 
+fancy { font-family: Amatic SC; font-size: 45px; font-style: normal; font-variant: bold; font-weight: 700; line-height: 50px; } 
 /* ah3 { font-family: Amatic SC; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 23px; } 
 ap { font-family: Amatic SC; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } 
 ablockquote { font-family: Amatic SC; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } 
 apre { font-family: Amatic SC; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } */
 
 
-/* * {
+* {
   outline: 1px solid red;
-} */
+}

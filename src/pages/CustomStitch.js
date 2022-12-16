@@ -18,11 +18,6 @@ function CustomStitch() {
             width={600}
           />
         </Stack>
-        
-        <div>aaa</div>
-        <div>aaa</div>
-        <div>aaa</div>
-        <div>aaa</div>
 
       </Stack>
     </Container>
