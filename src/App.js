@@ -1,5 +1,6 @@
 import './App.css';
 import NavigationBar from './components/NavigationBar';
+import Footer from './components/Footer';
 import Home from './pages/Home'
 import Pricing from './pages/Pricing'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -30,7 +31,9 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
+        <Footer />
       </Router>
+
 
     </div>
   );

@@ -1,23 +1,39 @@
 import React from 'react'
-import Stack from 'react-bootstrap/Stack';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+import { Carousel, Button, Row, Col, Container, Stack } from 'react-bootstrap';
 
 import Image from "react-bootstrap/Image";
-import DogConvert from '../assets/converted_dog.webp'
-import CatConvert from '../assets/converted_cat.webp'
-import Sample from '../assets/sample_kit.webp'
+
+import {
+  ConvertedCat,
+  ConvertedDog,
+  SampleKit,
+  Testimonial1,
+  Testimonial2,
+  Testimonial3,
+  Testimonial4,
+  Testimonial5,
+  Testimonial6,
+} from '../assets';
 
 function Home() {
+  var testimonials = [Testimonial6, Testimonial1, Testimonial2, Testimonial3, Testimonial4, Testimonial5];
+  Array.prototype.chunk = function(size) {
+    const result = [];
+  
+    while (this.length) {
+      result.push(this.splice(0, size));
+    }
+  
+    return result;
+  };
+
   return (
-    <Container className="col-md-9 mx-auto">
+    <Container className="col-md-9 mx-auto mb-6">
       <Stack gap={5} className="mx-auto mt-4">
         <Container className='min-vh-100 '>
           <Row className='align-items-center my-5'>
             <Col>
-              <fancy>iCustomStitch - Create Custom Cross Stitch Kits</fancy>
+              <div className='fancy'>iCustomStitch - Create Custom Cross Stitch Kits</div>
               <div className='h5 text-muted mt-3'>
                 Preserve happy memories by ordering an all-inclusive custom
                 cross stitch kit, suitable for cross-stitchers with any 
@@ -28,14 +44,14 @@ function Home() {
             <Col xs={1} />
             <Col>
               <Image
-                src={DogConvert}
+                src={ConvertedDog}
                 fluid
               />
             </Col>
           </Row>
         </Container>
         <Container className='mb-6' id="learn-more">
-          <fancy>What do we do?</fancy>
+        <div className='fancy'>What do we do?</div>
           <Row>
             <Col xs={9}>
               <div className='mt-2 mb-3'>
@@ -59,17 +75,15 @@ function Home() {
                 </div>
               </div>
               <Image
-                src={CatConvert}
+                src={ConvertedCat}
                 fluid
               />
-            </Col>
-            <Col>
-              
-            </Col>
+            </Col>              
+            <Col />
           </Row>
         </Container>
         <Container>
-          <fancy>What is included?</fancy>
+          <div className='fancy'>What is included?</div>
           <Row>
             <Col xs={6}>
               <div className='mt-2 mb-2'>iCustomStitch is a custom cross stitch kit maker to
@@ -84,7 +98,7 @@ function Home() {
                 cross stitch design project into a timeless work of art:
               </div>
               <div className='mt-3'>
-                <ul class="no-bullets">
+                <ul className="no-bullets">
                   <li><b>Fabric:</b> prepared Aida with 100% precision washable color paint</li>
                   <li><b>Floss:</b> pre-sorted cotton threads with thread organizer</li>
                   <li><b>Chart:</b> cross stitch chart in full color and easy instructions</li>
@@ -94,12 +108,29 @@ function Home() {
             </Col>
             <Col>
               <Image 
-                src={Sample}
+                src={SampleKit}
                 fluid
               />
             </Col>
 
           </Row>
+        </Container>
+        <Container className="mt-6" >
+          <div className='fancy'>Testimonials</div>
+          <Carousel className='mb-6 carousel-height' variant="dark">
+            {testimonials.chunk(1).map((chunk, idx) => (
+              <Carousel.Item key={idx} interval={2500}>
+                <Container>
+                  <div className='d-flex align-items-center justify-content-center'>
+                    <Image 
+                      src={chunk}
+                      width="50%"
+                    />
+                  </div>
+                </Container>
+              </Carousel.Item>
+            ))}
+          </Carousel>
         </Container>
       </Stack>
     </Container>
