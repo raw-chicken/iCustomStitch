@@ -1,10 +1,13 @@
 import React from 'react'
-import { Stack, Container, Table, Row, Col, Image } from 'react-bootstrap'
+import { Stack, Container, Table, Image } from 'react-bootstrap'
 import {
   CatSample,
   BabySample,
   TwoPeopleSample,
   FullBodySample,
+  WeddingSample1,
+  WeddingSample2,
+  SampleKit
 } from '../assets';
 
 function Pricing() {
@@ -23,22 +26,61 @@ function Pricing() {
   ["60\"", "$269.98", "$242.98", "$202.49"]];
   
   return (
-    <Container className="col-md-9 mx-auto">
-      <Stack gap={2} className="col-md-9 mx-auto">
-        <div className="fancy text-wrap mt-3">Affordable price for custom cross stitch kits</div>
-        <div className="col-md-9 mb-3">
-          iCustomStitch cross stitch kits will save you time and effort at an affordable price. In
-          addition, we provide a price match guarantee for any custom cross stitch kits of the same
-          quality.
+    <Container className="col-md-9 mx-auto mb-4">
+      <Stack gap={5} className="col-md-9">
+        <div>
+          <Stack gap={3}>
+            <div className="fancy text-wrap mt-3">Affordable Prices for All Inclusive Custom Cross Stitch Kits</div>
+            <div>
+              iCustomStitch cross stitch kits will save you time and effort at an affordable price. In
+              addition, we provide a price match guarantee for any custom cross stitch kits of the same
+              quality.
+            </div>
+            <div>
+              Prices for our custom cross stitch kits are listed by size in the table below. There is currently
+              a site-wide 10% discount, and there is a 25% discount for an order of two kits or more. See below
+              an example of an all inclusive custom kit with instructions.
+            </div>
+            <Image 
+              src={SampleKit}
+              fluid
+            />
+          </Stack>
         </div>
-        <div className="col-md-9 mb-3">
-          Prices for our custom cross stitch kits are listed by size in the table below. There is currently
-          a site-wide 10% discount, and there is a 25% discount for an order of two kits or more. We have
-          also included an example of a custom kit with instructions.
+        <div>
+          <div className='fancy'>Price Chart</div>
+          <Table striped bordered hover size="sm">
+            <thead>
+              <tr>
+                <th>Size &#40;inches&#41;</th>
+                <th>Regular Price</th>
+                <th>Promotion &#40;10% OFF&#41;</th>
+                <th>2+ Kits &#40;25% OFF Each&#41;</th>
+              </tr>
+            </thead>
+            <tbody>
+              {table.map((chunk, idx) => (
+                <tr>
+                  <td>{chunk[0]}</td>
+                  <td>{chunk[1]}</td>
+                  <td>{chunk[2]}</td>
+                  <td>{chunk[3]}</td>
+                </tr>
+              ))}
+            
+            </tbody>
+          </Table>
         </div>
-        <div className='fancy'>Sample Sizing Choice</div>
-        <Container>
-          <Row className="mb-3">
+        <div>
+        <div className='fancy'>Choosing The Correct Size</div>
+          <div className='mb-3'>
+            The examples presented below gives an outline of what can be converted, however, to ensure
+            that you are satisfied, reach out to us so that we can convert your photo and provide you a
+            sample chart to see if it is to your satisfaction. With our printed and gridded fabric, you
+            will no longer need to look at a chart when stitching, however, we will still provide a chart
+            if requested.
+          </div>
+          <Stack gap={3}>
             <Stack gap={3} direction='horizontal'>
               <Image 
                 src={BabySample}
@@ -51,52 +93,38 @@ function Pricing() {
               <div>
                 size 12" - 18" converts close shoot pictures
               </div>
-              <a href="https://www.freepik.com/free-photo/portrait-beautiful-expressive-laughing-baby-holds-head-up_1281884.htm#query=baby&position=8&from_view=keyword">
+              {/* <a href="https://www.freepik.com/free-photo/portrait-beautiful-expressive-laughing-baby-holds-head-up_1281884.htm#query=baby&position=8&from_view=keyword">
                 TEMP Include somewhere else
-              </a>
+              </a> */}
             </Stack>
-          </Row>
-          <Row mb-3>
             <Stack gap={3} direction='horizontal'>
               <Image 
                 src={FullBodySample}
-                width="12%"
+                width="14%"
               />
               <Image 
                 src={TwoPeopleSample}
-                width="27%"
+                width="32%"
               />
               <div>
                 size 20" - 28" converts full body or close-up pics of two
               </div>
             </Stack>
-          </Row>
-
-
-
-        </Container>
-        <Table striped bordered hover size="sm">
-          <thead>
-            <tr>
-              <th>Size &#40;inches&#41;</th>
-              <th>Regular Price</th>
-              <th>Promotion &#40;10% OFF&#41;</th>
-              <th>2+ Kits &#40;25% OFF Each&#41;</th>
-            </tr>
-          </thead>
-          <tbody>
-            {table.map((chunk, idx) => (
-              <tr>
-                <td>{chunk[0]}</td>
-                <td>{chunk[1]}</td>
-                <td>{chunk[2]}</td>
-                <td>{chunk[3]}</td>
-              </tr>
-            ))}
-           
-          </tbody>
-        </Table>
-        
+            <Stack gap={3} direction='horizontal'>
+              <Image 
+                src={WeddingSample2}
+                width="32%"
+              />
+              <Image 
+                src={WeddingSample1}
+                width="14%"
+              />
+              <div>
+                size 32"+ can handle most pictures
+              </div>
+            </Stack>
+          </Stack>
+        </div>
       </Stack>
     </Container>
   )

@@ -5,6 +5,8 @@ export const BabySample = require("./baby_sample.jpg");
 export const CatSample = require("./cat_sample.jpg");
 export const TwoPeopleSample = require("./two_people_sample.jpg");
 export const FullBodySample = require("./full_body_sample.jpg");
+export const WeddingSample1 = require("./wedding_sample1.jpg");
+export const WeddingSample2 = require("./wedding_sample2.jpg");
 
 export const Testimonial1 = require("./testimonials/testimonial1.webp");
 export const Testimonial2 = require("./testimonials/testimonial2.webp");

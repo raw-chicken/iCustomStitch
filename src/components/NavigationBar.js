@@ -17,7 +17,7 @@ function NavigationBar() {
           <Nav.Link href="home">Home</Nav.Link>
           <Nav.Link href="custom-stitch">Stitch My Photo</Nav.Link>
           <Nav.Link href="products">Products</Nav.Link>
-          <Nav.Link href="pricing">Pricing</Nav.Link>
+          <Nav.Link href="pricing">Pricing and Sizing</Nav.Link>
           <Nav.Link href="faq">FAQ</Nav.Link>
           <Nav.Link href="contact">Contact Us</Nav.Link>
         </Nav>
