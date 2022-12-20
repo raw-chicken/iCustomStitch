@@ -17,15 +17,6 @@ import {
 
 function Home() {
   var testimonials = [Testimonial6, Testimonial1, Testimonial2, Testimonial3, Testimonial4, Testimonial5];
-  Array.prototype.chunk = function(size) {
-    const result = [];
-  
-    while (this.length) {
-      result.push(this.splice(0, size));
-    }
-  
-    return result;
-  };
 
   return (
     <Container className="col-md-9 mx-auto mb-6">
@@ -118,7 +109,7 @@ function Home() {
         <Container className="mt-6" >
           <div className='fancy'>Testimonials</div>
           <Carousel className='mb-6 carousel-height' variant="dark">
-            {testimonials.chunk(1).map((chunk, idx) => (
+            {testimonials.map((chunk, idx) => (
               <Carousel.Item key={idx} interval={2500}>
                 <Container>
                   <div className='d-flex align-items-center justify-content-center'>
