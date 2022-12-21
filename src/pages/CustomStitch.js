@@ -7,7 +7,6 @@ import {
   NeedleKit,
   SampleKit,
   WorldWideShipping,
-  T,
   Threads,
   ChartSample,
   FlowerGirl

@@ -22,6 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# secrets
+keys.json
+
 # Created by https://www.toptal.com/developers/gitignore/api/react,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,visualstudiocode
 
