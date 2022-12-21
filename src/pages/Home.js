@@ -42,7 +42,7 @@ function Home() {
           </Row>
         </Container>
         <Container className='mb-6' id="learn-more">
-        <div className='fancy'>What do we do?</div>
+        <div className='header'>What do we do?</div>
           <Row>
             <Col xs={9}>
               <div className='mt-2 mb-3'>
@@ -74,7 +74,7 @@ function Home() {
           </Row>
         </Container>
         <Container>
-          <div className='fancy'>What is included?</div>
+          <div className='header'>What is included?</div>
           <Row>
             <Col xs={6}>
               <div className='mt-2 mb-2'>iCustomStitch is a custom cross stitch kit maker to
@@ -107,7 +107,7 @@ function Home() {
           </Row>
         </Container>
         <Container className="mt-6" >
-          <div className='fancy'>Testimonials</div>
+          <div className='header'>Testimonials</div>
           <Carousel className='mb-6 carousel-height' variant="dark">
             {testimonials.map((chunk, idx) => (
               <Carousel.Item key={idx} interval={2500}>

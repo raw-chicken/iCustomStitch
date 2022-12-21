@@ -27,10 +27,10 @@ function Pricing() {
   
   return (
     <Container className="col-md-9 mx-auto mb-4">
-      <Stack gap={5} className="col-md-9">
+      <Stack gap={5} className="col-md-11">
         <div>
           <Stack gap={3}>
-            <div className="fancy text-wrap mt-3">Affordable Prices for All Inclusive Custom Cross Stitch Kits</div>
+            <div className="header text-wrap mt-3">Affordable Prices for All Inclusive Custom Cross Stitch Kits</div>
             <div>
               iCustomStitch cross stitch kits will save you time and effort at an affordable price. In
               addition, we provide a price match guarantee for any custom cross stitch kits of the same
@@ -48,7 +48,7 @@ function Pricing() {
           </Stack>
         </div>
         <div>
-          <div className='fancy'>Price Chart</div>
+          <div className='header'>Price Chart</div>
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
@@ -72,7 +72,7 @@ function Pricing() {
           </Table>
         </div>
         <div>
-        <div className='fancy'>Choosing The Correct Size</div>
+        <div className='header'>Choosing The Right Size</div>
           <div className='mb-3'>
             The examples presented below gives an outline of what can be converted, however, to ensure
             that you are satisfied, reach out to us so that we can convert your photo and provide you a
