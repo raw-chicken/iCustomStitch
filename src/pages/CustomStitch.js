@@ -7,6 +7,10 @@ import {
   NeedleKit,
   SampleKit,
   WorldWideShipping,
+  T,
+  Threads,
+  ChartSample,
+  FlowerGirl
 } from '../assets';
 
 function CustomStitch() {
@@ -110,6 +114,62 @@ function CustomStitch() {
                     <li>Fast personalized services</li>
                   </ul>
                 </div>
+              </Stack>
+            </Col>
+          </Row>
+          <Row className="mb-3 mt-5">
+            <Col>
+              <Stack gap={2}>
+                <div className='subheader'>iCustomStitch Kit Instructions</div>
+                <div>
+                  Stitching is easy with our precision cross stitch no-count stamped kits
+                  <ol>
+                    <li>Identify the DMC code and its corresponding thread number.</li>
+                    <li>Organize the DMC threads by using provided thread organizers.</li>
+                    <li>Cut the lengths of thread to 18" long and separate them into six single strands before you use them.</li>
+                    <li>Use <b>3 strands</b> to stitch on iCustomStitch's 11-ct Precision Cross Stitch Aida.</li>
+                    <li>Start from any color block and enjoy the finishing pattern block by block.</li>
+                  </ol>
+                </div>
+              </Stack>
+            </Col>
+            <Col xs={4} className="d-flex align-items-center justify-content-center">
+              <Stack gap={3}>
+                <Image
+                  src={Threads}
+                  width="80%"
+                />
+                <Image
+                  src={ChartSample}
+                  width="80%"
+                />
+              </Stack>
+            </Col>
+          </Row>
+          <Row className="mb-3 mt-5">
+            <Col>
+              <Stack gap={2}>
+                <div className='subheader'>How to Wash After Finishing</div>
+                <div>
+                  Having spent some time completing your cross stitch project, it is
+                  now the time to begin the process of preserving this piece of needlecraft.
+                  Before you can frame your personalized cross stitched picture, it must,
+                  of course, be spotlessly clean.
+                  <ul>
+                    <li>Soak your finished cross stitched work in lukewarm water for 30 minutes.</li>
+                    <li>Change clean water several times until the final rinse water is clear.</li>
+                    <li>Smooth out any creases by ironing your cross stitching product face down at a medium heat until completely dry and smooth.</li>
+                  </ul>
+                  NOW you have a beautiful piece of custom cross stitch artwork ready to frame and decorate your wall of any room. Congratulations!!!
+                </div>
+              </Stack>
+            </Col>
+            <Col xs={4} className="d-flex align-items-center justify-content-center">
+              <Stack gap={3}>
+                <Image
+                  src={FlowerGirl}
+                  width="80%"
+                />
               </Stack>
             </Col>
           </Row>

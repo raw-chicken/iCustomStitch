@@ -13,6 +13,8 @@ export const ChartSample = require("./samples/chart_sample.webp");
 export const DogSample = require("./samples/dog_sample.webp");
 export const DogSampleConverted = require("./samples/dog_sample_converted.webp");
 export const NeedleKit = require("./samples/needle_kit.webp");
+export const Threads = require("./threads.webp");
+export const FlowerGirl = require("./samples/flower_girl_sample.webp");
 
 export const Testimonial1 = require("./testimonials/testimonial1.webp");
 export const Testimonial2 = require("./testimonials/testimonial2.webp");
