@@ -69,8 +69,11 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     setStatus("Sending...");
 
-    var data = await readFiles(e.files);
-
+    if (e.files !== null)
+      var data = await readFiles(e.files);
+    else 
+      data = []
+    
     let formData = new FormData();
     formData.append("name", e.name);
     formData.append("email", e.email);
@@ -90,7 +93,11 @@ const ContactForm = () => {
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
+      onSubmit={(values, { resetForm }) => {
+        handleSubmit(values);
+        resetForm();
+      }}
       initialValues={{
         name: '',
         email: '',
