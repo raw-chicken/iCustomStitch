@@ -27,7 +27,7 @@ function Pricing() {
   
   return (
     <Container className="col-md-9 mx-auto mb-4">
-      <Stack gap={5} className="col-md-11">
+      <Stack gap={5} className="col-md-10">
         <div>
           <Stack gap={3}>
             <div className="header text-wrap mt-3">Affordable Prices for All Inclusive Custom Cross Stitch Kits</div>
@@ -48,7 +48,7 @@ function Pricing() {
           </Stack>
         </div>
         <div>
-          <div className='header'>Price Chart</div>
+          <div className='header mb-3'>Price Chart</div>
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
@@ -67,12 +67,11 @@ function Pricing() {
                   <td>{chunk[3]}</td>
                 </tr>
               ))}
-            
             </tbody>
           </Table>
         </div>
         <div>
-        <div className='header'>Choosing The Right Size</div>
+        <div className='header mb-3'>Choosing The Right Size</div>
           <div className='mb-3'>
             The examples presented below gives an outline of what can be converted, however, to ensure
             that you are satisfied, reach out to us so that we can convert your photo and provide you a

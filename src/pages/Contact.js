@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
+import  ContactForm from '../components/ContactForm';
+import { Container } from 'react-bootstrap';
 
 function Contact() {
   return (
-    <div>Contact Page</div>
+    <Container className="col-md-9 mx-auto my-5">
+      <ContactForm />
+    </Container>
   )
 }
 
