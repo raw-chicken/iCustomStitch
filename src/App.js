@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomStitch from './pages/CustomStitch';
 import FAQ from './pages/FAQ';
-import Products from './pages/Products';
 import Contact from './pages/Contact';
 
 <link
@@ -28,7 +27,6 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/custom-stitch" element={<CustomStitch />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/products" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />

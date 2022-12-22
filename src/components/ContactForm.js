@@ -69,25 +69,30 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     setStatus("Sending...");
 
-    if (e.files !== null)
-      var data = await readFiles(e.files);
-    else 
-      data = []
-    
-    let formData = new FormData();
-    formData.append("name", e.name);
-    formData.append("email", e.email);
-    formData.append("subject", e.subject);
-    formData.append("message", e.message);
-    formData.append("files", JSON.stringify(data));
+    try {
+      if (e.files !== null)
+        var data = await readFiles(e.files);
+      else 
+        data = []
+      
+      let formData = new FormData();
+      formData.append("name", e.name);
+      formData.append("email", e.email);
+      formData.append("subject", e.subject + " - " + e.name);
+      formData.append("message", e.message);
+      formData.append("files", JSON.stringify(data));
 
-    let response = await fetch("http://localhost:5000/contact", {
-      method: "POST",
-      body: formData,
-    });
-    setStatus("Submit");
-    let result = await response.json();
-    alert(result.status);
+      let response = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        body: formData,
+      });
+      setStatus("Submit");
+      let result = await response.json();
+      alert(result.status);
+    } catch (e) {
+      setStatus("Submit");
+      alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly");
+    }
   };
 
   return (
@@ -103,7 +108,7 @@ const ContactForm = () => {
         email: '',
         subject: 'Personalized Cross Stitch Kit Inquiry',
         message: '',
-        files: null,
+        files: [],
         maxSize: 4 * 1024 * 1024,
         size: 0,
       }}
