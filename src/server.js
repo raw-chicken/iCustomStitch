@@ -59,4 +59,17 @@ router.post("/contact", (req, res) => {
       res.json({ status: "Message Sent" });
     }
   });
+  // res.json({ status: "Message Sent (debug)" });
+});
+
+router.post('/verify', (req, res) => {
+  // console.log("Inside post");
+  const response = req.fields['g-recaptcha-response'];
+  var VERIFY_URL = `https://www.google.com/recaptcha/api/siteverify?secret=${keys.v3_secret}&response=${response}`;
+  // console.log(VERIFY_URL);
+  fetch(VERIFY_URL, {
+    method: 'POST',
+  }).then(res_1 => res_1.json()).then(res_2 => {
+    res.send(res_2);
+  });
 });

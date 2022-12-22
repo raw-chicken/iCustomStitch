@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState } from "react";
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import ReCAPTCHA from "react-google-recaptcha";
 import { readFiles, convert } from "./utils/form_utils";
@@ -8,7 +8,9 @@ import * as yup from 'yup';
 
 const maxSize = 4 * 1024 * 1024;
 
-const TEST_SITE_KEY = "6LfBvp0jAAAAANpn2tum7pckshjYkzm53mf5f0om";
+const RATE = 0.75;
+
+const SITE_KEY = "6LfBvp0jAAAAANpn2tum7pckshjYkzm53mf5f0om";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -26,70 +28,71 @@ const ContactForm = () => {
 
   const [status, setStatus] = useState("Submit");
 
-  const [reCaptchaRef, setRef] = useState(createRef());
+  const [recaptcha, setRecaptcha] = useState(null);
 
-  const [fileNames, setFileNames] = useState([]);
+  // const [fileNames, setFileNames] = useState([]);
 
-  function onChange(value) {
-    console.log('Captcha value:', value);
+  const captcha = async () => {
+    try {
+      await recaptcha.execute(SITE_KEY, {action: 'submit'}).then(token => {
+        let formData = new FormData();
+        formData.append("g-recaptcha-response", token);
+        fetch('http://localhost:5000/verify', {
+          method: 'POST',
+          body: formData
+        }).then(res => res.json()).then(res => {
+          if (res.score < RATE)
+            throw Error('Captcha failed. Try again later, or email us directly.')
+          return 1;
+        });
+      });
+    } catch (e) {
+      console.log(e)
+      setStatus("Submit");
+      alert("Something went wrong with captcha");
+      return -1;
+    }
+    
+  }
+
+  const sendEmail = async (e) => {
+    try {
+      if (e.files !== null)
+        var data = await readFiles(e.files);
+      else 
+        data = []
+      
+      let formData = new FormData();
+      formData.append("name", e.name);
+      formData.append("email", e.email);
+      formData.append("subject", e.subject + " - " + e.name);
+      formData.append("message", e.message);
+      formData.append("files", JSON.stringify(data));
+
+      let response = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        body: formData,
+      });
+      setStatus("Submit");
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+      setStatus("Submit");
+      alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly");
+    }
   }
 
   const handleSubmit = async (e) => {
     setStatus("Sending...");
-
-    try {
-      if (e.files !== null)
-        var data = await readFiles(e.files);
-      else 
-        data = []
-      
-      let formData = new FormData();
-      formData.append("name", e.name);
-      formData.append("email", e.email);
-      formData.append("subject", e.subject + " - " + e.name);
-      formData.append("message", e.message);
-      formData.append("files", JSON.stringify(data));
-
-      let response = await fetch("http://localhost:5000/contact", {
-        method: "POST",
-        body: formData,
-      });
-      setStatus("Submit");
-      let result = await response.json();
-      alert(result.status);
-    } catch (e) {
-      setStatus("Submit");
-      alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly");
-    }
-  };
-
-  const customHandleBlur = async (e) => {
-    setStatus("Sending...");
-
-    try {
-      if (e.files !== null)
-        var data = await readFiles(e.files);
-      else 
-        data = []
-      
-      let formData = new FormData();
-      formData.append("name", e.name);
-      formData.append("email", e.email);
-      formData.append("subject", e.subject + " - " + e.name);
-      formData.append("message", e.message);
-      formData.append("files", JSON.stringify(data));
-
-      let response = await fetch("http://localhost:5000/contact", {
-        method: "POST",
-        body: formData,
-      });
-      setStatus("Submit");
-      let result = await response.json();
-      alert(result.status);
-    } catch (e) {
-      setStatus("Submit");
-      alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly");
-    }
+    
+    captcha().then((res) => {
+      if (res === -1) return -1;
+      var a = sendEmail(e);
+      return a;
+    }).then((res) => {
+      console.log(res);
+      alert(res.status);
+    });
   };
 
   return (
@@ -111,7 +114,6 @@ const ContactForm = () => {
         handleSubmit(values);
         resetForm();
       }}
-      customHandleBlur={customHandleBlur}
     >
       {({
         handleSubmit,
@@ -119,7 +121,6 @@ const ContactForm = () => {
         handleBlur,
         setFieldValue,
         setFieldTouched,
-        customHandleBlur,
         values,
         touched,
         isValid,
@@ -134,10 +135,6 @@ const ContactForm = () => {
               placeholder="e.g. John Doe"
               value={values.name}
               onChange={handleChange}
-              onBlur={(e) => {
-                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
-                handleBlur(e)
-              }}
               isInvalid={!!errors.name}
             />
           </Form.Group>
@@ -150,10 +147,6 @@ const ContactForm = () => {
               name="email"
               value={values.email}
               onChange={handleChange}
-              onBlur={(e) => {
-                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
-                handleBlur(e)
-              }}
               isInvalid={!!errors.email}
             />
             <Form.Text className="text-muted">
@@ -169,10 +162,6 @@ const ContactForm = () => {
               name="subject"
               value={values.subject}
               onChange={handleChange}
-              onBlur={(e) => {
-                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
-                handleBlur(e)
-              }}
               isInvalid={!!errors.subject}
             />
           </Form.Group>
@@ -185,10 +174,6 @@ const ContactForm = () => {
               name="message"
               value={values.message}
               onChange={handleChange}
-              onBlur={(e) => {
-                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
-                handleBlur(e)
-              }}
               isInvalid={!!errors.message}
             />
           </Form.Group>
@@ -213,10 +198,6 @@ const ContactForm = () => {
                   setFieldValue("size", size);
                   setFieldTouched("size", true, false);
                 }}
-                onBlur={(e) => {
-                  if (!values.recaptcha) {reCaptchaRef.current.execute();} 
-                  handleBlur(e)
-                }}
                 isInvalid={!!errors.files || !!errors.size}
               />
               <InputGroup.Text>{convert(values.size)} / {convert(values.maxSize)} </InputGroup.Text>
@@ -225,24 +206,22 @@ const ContactForm = () => {
               </Form.Control.Feedback>
             </InputGroup>
             <Form.Text className="text-muted">
-              Please email <a href="mailto:info@iCustomStitch.com">info@iCustomStitch.com</a> 
-              directly if your files use more than 4MB.
+              Please email <a href="mailto:info@iCustomStitch.com">info@iCustomStitch.com</a> directly
+              if your files use more than 4MB.
               Current files attached: {}
             </Form.Text>
             
           </Form.Group>
-          
           <ReCAPTCHA
-            ref={reCaptchaRef}
-            sitekey={TEST_SITE_KEY}
-            onChange={onChange}
+            ref={e => (setRecaptcha(e))}
+            sitekey={SITE_KEY}
+            size="invisible"
           />
           
           <Button variant="primary" type="submit">
             {status}
           </Button>
         </Form>
-        
       )}
     </Formik>
   );
