@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import { Form, Button, InputGroup } from 'react-bootstrap';
+import ReCAPTCHA from "react-google-recaptcha";
+import { readFiles, convert } from "./utils/form_utils";
 import { Formik } from "formik";
 import * as yup from 'yup';
 
 
 const maxSize = 4 * 1024 * 1024;
+
+const TEST_SITE_KEY = "6LfBvp0jAAAAANpn2tum7pckshjYkzm53mf5f0om";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -18,55 +22,48 @@ const schema = yup.object().shape({
   maxSize: yup.number(),
 });
 
-
-function readFileAsync(file) {
-  return new Promise((resolve, reject) => {
-    let reader = new FileReader();
-
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-
-    reader.onerror = reject;
-
-    reader.readAsDataURL(file);
-  })
-}
-
-function readFiles(files) {
-  return new Promise(function (resolve, reject) {
-    let data = [];
-    const promises = files.map(async file => {
-      try {
-        const routes = await readFileAsync(file);
-        data.push(routes);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    Promise.all(promises)
-      .then(() => {
-        resolve(data)
-      })
-  })
-}
-
-const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
-function convert(bytes) {
-  let unit = 0;
-  while (bytes > 512) {
-    bytes /= 1024
-    unit++;
-  }
-  return bytes.toFixed(1) + " " + sizes[unit];
-}
-
 const ContactForm = () => {
+
   const [status, setStatus] = useState("Submit");
+
+  const [reCaptchaRef, setRef] = useState(createRef());
 
   const [fileNames, setFileNames] = useState([]);
 
+  function onChange(value) {
+    console.log('Captcha value:', value);
+  }
+
   const handleSubmit = async (e) => {
+    setStatus("Sending...");
+
+    try {
+      if (e.files !== null)
+        var data = await readFiles(e.files);
+      else 
+        data = []
+      
+      let formData = new FormData();
+      formData.append("name", e.name);
+      formData.append("email", e.email);
+      formData.append("subject", e.subject + " - " + e.name);
+      formData.append("message", e.message);
+      formData.append("files", JSON.stringify(data));
+
+      let response = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        body: formData,
+      });
+      setStatus("Submit");
+      let result = await response.json();
+      alert(result.status);
+    } catch (e) {
+      setStatus("Submit");
+      alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly");
+    }
+  };
+
+  const customHandleBlur = async (e) => {
     setStatus("Sending...");
 
     try {
@@ -98,11 +95,8 @@ const ContactForm = () => {
   return (
     <Formik
       validationSchema={schema}
-      // onSubmit={handleSubmit}
-      onSubmit={(values, { resetForm }) => {
-        handleSubmit(values);
-        resetForm();
-      }}
+      validateOnChange={false}
+      validateOnBlur={false}
       initialValues={{
         name: '',
         email: '',
@@ -111,7 +105,13 @@ const ContactForm = () => {
         files: [],
         maxSize: 4 * 1024 * 1024,
         size: 0,
+        recaptcha: '',
       }}
+      onSubmit={(values, { resetForm }) => {
+        handleSubmit(values);
+        resetForm();
+      }}
+      customHandleBlur={customHandleBlur}
     >
       {({
         handleSubmit,
@@ -119,6 +119,7 @@ const ContactForm = () => {
         handleBlur,
         setFieldValue,
         setFieldTouched,
+        customHandleBlur,
         values,
         touched,
         isValid,
@@ -133,6 +134,10 @@ const ContactForm = () => {
               placeholder="e.g. John Doe"
               value={values.name}
               onChange={handleChange}
+              onBlur={(e) => {
+                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
+                handleBlur(e)
+              }}
               isInvalid={!!errors.name}
             />
           </Form.Group>
@@ -145,6 +150,10 @@ const ContactForm = () => {
               name="email"
               value={values.email}
               onChange={handleChange}
+              onBlur={(e) => {
+                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
+                handleBlur(e)
+              }}
               isInvalid={!!errors.email}
             />
             <Form.Text className="text-muted">
@@ -160,6 +169,10 @@ const ContactForm = () => {
               name="subject"
               value={values.subject}
               onChange={handleChange}
+              onBlur={(e) => {
+                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
+                handleBlur(e)
+              }}
               isInvalid={!!errors.subject}
             />
           </Form.Group>
@@ -172,6 +185,10 @@ const ContactForm = () => {
               name="message"
               value={values.message}
               onChange={handleChange}
+              onBlur={(e) => {
+                if (!values.recaptcha) {reCaptchaRef.current.execute();} 
+                handleBlur(e)
+              }}
               isInvalid={!!errors.message}
             />
           </Form.Group>
@@ -196,6 +213,10 @@ const ContactForm = () => {
                   setFieldValue("size", size);
                   setFieldTouched("size", true, false);
                 }}
+                onBlur={(e) => {
+                  if (!values.recaptcha) {reCaptchaRef.current.execute();} 
+                  handleBlur(e)
+                }}
                 isInvalid={!!errors.files || !!errors.size}
               />
               <InputGroup.Text>{convert(values.size)} / {convert(values.maxSize)} </InputGroup.Text>
@@ -210,7 +231,13 @@ const ContactForm = () => {
             </Form.Text>
             
           </Form.Group>
-
+          
+          <ReCAPTCHA
+            ref={reCaptchaRef}
+            sitekey={TEST_SITE_KEY}
+            onChange={onChange}
+          />
+          
           <Button variant="primary" type="submit">
             {status}
           </Button>
