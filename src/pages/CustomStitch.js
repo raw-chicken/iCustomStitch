@@ -148,7 +148,7 @@ function CustomStitch() {
           <Row className="mb-3 mt-5">
             <Col>
               <Stack gap={2}>
-                <div className='subheader'>How to Wash After Finishing</div>
+                <div className='subheader'>Finishing Your Cross Stitch Kit</div>
                 <div>
                   Having spent some time completing your cross stitch project, it is
                   now the time to begin the process of preserving this piece of needlecraft.
@@ -159,7 +159,7 @@ function CustomStitch() {
                     <li>Change clean water several times until the final rinse water is clear.</li>
                     <li>Smooth out any creases by ironing your cross stitching product face down at a medium heat until completely dry and smooth.</li>
                   </ul>
-                  NOW you have a beautiful piece of custom cross stitch artwork ready to frame and decorate your wall of any room. Congratulations!!!
+                  Now you have a beautiful piece of custom cross stitch artwork ready to frame and decorate your wall of any room. Congratulations!!!
                 </div>
               </Stack>
             </Col>
