@@ -5,7 +5,6 @@ import { readFiles, convert } from "./utils/form_utils";
 import { Formik } from "formik";
 import * as yup from 'yup';
 
-
 const maxSize = 4 * 1024 * 1024;
 
 const RATE = 0.75;
