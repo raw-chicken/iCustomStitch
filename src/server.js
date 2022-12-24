@@ -62,6 +62,10 @@ router.post("/contact", (req, res) => {
   // res.json({ status: "Message Sent (debug)" });
 });
 
+router.post("/test", (req, res) => {
+  res.json({ Message: "This is a test" });
+});
+
 router.post('/verify', (req, res) => {
   // console.log("Inside post");
   const response = req.fields['g-recaptcha-response'];

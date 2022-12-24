@@ -39,3 +39,25 @@ export function convert(bytes) {
   }
   return bytes.toFixed(1) + " " + sizes[unit];
 }
+
+
+const RATE = 0.75;
+export async function captcha(recaptcha, SITE_KEY) {
+  try {
+    await recaptcha.execute(SITE_KEY, {action: 'submit'}).then(token => {
+      let formData = new FormData();
+      formData.append("g-recaptcha-response", token);
+      fetch('https://icustomstitch-form2-v5e54zv6aa-uc.a.run.app/verify', {
+        method: 'POST',
+        body: formData
+      }).then(res => res.json()).then(res => {
+        if (res.score < RATE)
+          throw Error('Captcha failed. Try again later, or email us directly.')
+        return 1;
+      });
+    });
+  } catch (e) {
+    alert("Something went wrong with captcha");
+    return -1;
+  }
+}

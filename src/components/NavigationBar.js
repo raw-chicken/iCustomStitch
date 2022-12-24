@@ -7,11 +7,11 @@ import Navbar from 'react-bootstrap/Navbar';
 function NavigationBar() {
 
   return (
-    <Navbar bg="primary" variant="dark" expand="lg">
+    <Navbar bg="primary" variant="dark" expand="lg" className='navbar-text'>
       <Container className='col-md-9 mx-auto'>
         <Navbar.Brand href="home">iCustomStitch</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="navbar-toggler-icon" >
+        <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="home">Home</Nav.Link>
             <Nav.Link href="custom-stitch">Stitch My Photo</Nav.Link>

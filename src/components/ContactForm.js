@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { Form, Button, InputGroup } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from "react";
+import { Form, Button, InputGroup, ListGroup } from 'react-bootstrap';
 import ReCAPTCHA from "react-google-recaptcha";
-import { readFiles, convert } from "./utils/form_utils";
+import { readFiles, convert, captcha } from "./utils/form_utils";
 import { Formik } from "formik";
+import FileDisplay from "./FileDisplay"
 import * as yup from 'yup';
 
-const maxSize = 4 * 1024 * 1024;
-
-const RATE = 0.75;
+const MAX_SIZE = 4 * 1024 * 1024;
 
 const SITE_KEY = "6LfBvp0jAAAAANpn2tum7pckshjYkzm53mf5f0om";
 
@@ -18,41 +17,24 @@ const schema = yup.object().shape({
   message: yup.string().required(),
   files: yup.mixed(),
   size: yup.number().test("fileSize", "The files have exceeded the size limit", (f) => {
-    return f < maxSize;
+    return f < MAX_SIZE;
   }),
   maxSize: yup.number(),
 });
 
 const ContactForm = () => {
 
+  const [size, setSize] = useState(0);
+
   const [status, setStatus] = useState("Submit");
 
   const [recaptcha, setRecaptcha] = useState(null);
 
-  // const [fileNames, setFileNames] = useState([]);
-
-  const captcha = async () => {
-    try {
-      await recaptcha.execute(SITE_KEY, {action: 'submit'}).then(token => {
-        let formData = new FormData();
-        formData.append("g-recaptcha-response", token);
-        fetch('http://localhost:5000/verify', {
-          method: 'POST',
-          body: formData
-        }).then(res => res.json()).then(res => {
-          if (res.score < RATE)
-            throw Error('Captcha failed. Try again later, or email us directly.')
-          return 1;
-        });
-      });
-    } catch (e) {
-      console.log(e)
-      setStatus("Submit");
-      alert("Something went wrong with captcha");
-      return -1;
-    }
-    
-  }
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("Custom Cross Stitch Inquiry");
+  const [message, setMessage] = useState("");
+  const [files, setFiles] = useState([]);
 
   const sendEmail = async (e) => {
     try {
@@ -62,20 +44,20 @@ const ContactForm = () => {
         data = []
       
       let formData = new FormData();
-      formData.append("name", e.name);
-      formData.append("email", e.email);
-      formData.append("subject", e.subject + " - " + e.name);
-      formData.append("message", e.message);
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("subject", subject + " - " + name);
+      formData.append("message", message);
       formData.append("files", JSON.stringify(data));
+      console.log("Formdata", formData);
 
-      let response = await fetch("http://localhost:5000/contact", {
+      let response = await fetch("https://icustomstitch-form2-v5e54zv6aa-uc.a.run.app/contact", {
         method: "POST",
         body: formData,
       });
       setStatus("Submit");
       return await response.json();
     } catch (e) {
-      console.log(e);
       setStatus("Submit");
       alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly");
     }
@@ -84,15 +66,32 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     setStatus("Sending...");
     
-    captcha().then((res) => {
+    captcha(recaptcha, SITE_KEY).then((res) => {
       if (res === -1) return -1;
-      var a = sendEmail(e);
-      return a;
+      return sendEmail(e);
     }).then((res) => {
-      console.log(res);
       alert(res.status);
     });
   };
+
+  function listFiles(files) {
+    console.log("Files", files);
+    function deleteFile(file) {
+      var ind = files.findIndex(f => file === f.name);
+      files.splice(ind, 1)
+      // forceUpdate();
+    }
+
+    // var uploaded = files.map((file, ind) => {
+    //   return <FileDisplay file={file} key={ind} delete={deleteFile} />
+    // })
+    // // setFieldValue("subject", "THIS IS A TEST")
+    // return (
+    //   <ListGroup variant="flush">
+    //     <ListGroup.Item>{uploaded}</ListGroup.Item>
+    //   </ListGroup>
+    // );
+  }
 
   return (
     <Formik
@@ -100,19 +99,20 @@ const ContactForm = () => {
       validateOnChange={false}
       validateOnBlur={false}
       initialValues={{
-        name: '',
-        email: '',
-        subject: 'Personalized Cross Stitch Kit Inquiry',
-        message: '',
-        files: [],
-        maxSize: 4 * 1024 * 1024,
-        size: 0,
+        name: name,
+        email: email,
+        subject: subject,
+        message: message,
+        files: files,
+        size: size,
         recaptcha: '',
       }}
       onSubmit={(values, { resetForm }) => {
+        console.log("Values", values);
         handleSubmit(values);
         resetForm();
       }}
+      enableReinitialize
     >
       {({
         handleSubmit,
@@ -132,8 +132,8 @@ const ContactForm = () => {
               type="text"
               name="name"
               placeholder="e.g. John Doe"
-              value={values.name}
-              onChange={handleChange}
+              value={name}
+              onChange={e => setName(e.target.value)}
               isInvalid={!!errors.name}
             />
           </Form.Group>
@@ -144,8 +144,8 @@ const ContactForm = () => {
               type="email" 
               placeholder="e.g. info@iCustomStitch.com"
               name="email"
-              value={values.email}
-              onChange={handleChange}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               isInvalid={!!errors.email}
             />
             <Form.Text className="text-muted">
@@ -159,8 +159,8 @@ const ContactForm = () => {
               type="text" 
               placeholder="e.g. info@iCustomStitch.com"
               name="subject"
-              value={values.subject}
-              onChange={handleChange}
+              value={subject}
+              onChange={e => setSubject(e.target.value)}
               isInvalid={!!errors.subject}
             />
           </Form.Group>
@@ -171,8 +171,8 @@ const ContactForm = () => {
               required
               as="textarea"
               name="message"
-              value={values.message}
-              onChange={handleChange}
+              value={message}
+              onChange={e => setMessage(e.target.value)}
               isInvalid={!!errors.message}
             />
           </Form.Group>
@@ -183,31 +183,24 @@ const ContactForm = () => {
               <Form.Control
                 type="file"
                 multiple
-                files={values.files}
+                files={files}
                 onChange={e => {
-                  const files = Array.from(e.target.files);
-                  let fileNames = []
+                  setFiles(e.target.files);
                   let size = 0;
-                  Array.from(files).forEach((f) => {
-                    size += f.size;
-                    fileNames.push(f.name);
-                  });
-                  setFieldValue("files", files);
-                  setFieldTouched("files", false, false);
-                  setFieldValue("size", size);
-                  setFieldTouched("size", true, false);
+                  Array.from(e.target.files).forEach(f => size += f.size);
+                  setSize(size);
                 }}
                 isInvalid={!!errors.files || !!errors.size}
               />
-              <InputGroup.Text>{convert(values.size)} / {convert(values.maxSize)} </InputGroup.Text>
+              <InputGroup.Text>{convert(size)} / {convert(MAX_SIZE)} </InputGroup.Text>
               <Form.Control.Feedback tooltip type="invalid">
-                Files cannot use more than {convert(maxSize)} of space
+                Files cannot use more than {convert(MAX_SIZE)} of space
               </Form.Control.Feedback>
             </InputGroup>
             <Form.Text className="text-muted">
               Please email <a href="mailto:info@iCustomStitch.com">info@iCustomStitch.com</a> directly
-              if your files use more than 4MB.
-              Current files attached: {}
+              if your files use more than 4MB.<br />
+              Current files attached: {listFiles(values.files)}
             </Form.Text>
             
           </Form.Group>
