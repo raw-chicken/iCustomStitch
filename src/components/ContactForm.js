@@ -37,9 +37,10 @@ const ContactForm = () => {
   const [files, setFiles] = useState([]);
 
   const sendEmail = async (e) => {
+    // console.log("Send email", e);
     try {
       if (e.files !== null)
-        var data = await readFiles(e.files);
+        var data = await readFiles(Array.from(e.files));
       else 
         data = []
       
@@ -49,7 +50,7 @@ const ContactForm = () => {
       formData.append("subject", subject + " - " + name);
       formData.append("message", message);
       formData.append("files", JSON.stringify(data));
-      console.log("Formdata", formData);
+      // console.log("Formdata", formData);
 
       let response = await fetch("https://icustomstitch-form2-v5e54zv6aa-uc.a.run.app/contact", {
         method: "POST",
@@ -58,8 +59,9 @@ const ContactForm = () => {
       setStatus("Submit");
       return await response.json();
     } catch (e) {
+      // console.log(e); 
       setStatus("Submit");
-      alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly");
+      alert("Something went wrong and the form was not sent, please email info@iCustomStitch.com directly\nError: " + {e});
     }
   }
 
@@ -74,23 +76,34 @@ const ContactForm = () => {
     });
   };
 
-  function listFiles(files) {
-    console.log("Files", files);
+  function listFiles() {
+    // console.log("Files inside listFiles", files);
     function deleteFile(file) {
-      var ind = files.findIndex(f => file === f.name);
-      files.splice(ind, 1)
-      // forceUpdate();
+      console.log("Trying to delete file", file)
+      let temp_files = Array.from(files);
+      let list = new DataTransfer();
+
+      var ind = temp_files.findIndex(f => file.props.file.name === f.name);
+      temp_files.splice(ind, 1)
+
+      temp_files.forEach((f2) => {
+        list.items.add(f2)
+      })
+      
+      // URL.revokeObjectURL(file.objectURL);
+      // console.log("Trying to revoke", file.objectUrl);
+      setFiles(list.files);
     }
 
-    // var uploaded = files.map((file, ind) => {
-    //   return <FileDisplay file={file} key={ind} delete={deleteFile} />
-    // })
-    // // setFieldValue("subject", "THIS IS A TEST")
-    // return (
-    //   <ListGroup variant="flush">
-    //     <ListGroup.Item>{uploaded}</ListGroup.Item>
-    //   </ListGroup>
-    // );
+    var uploaded = Array.from(files).map((file, ind) => {
+      return <FileDisplay file={file} key={ind} delete={deleteFile} />
+    })
+    // setFieldValue("subject", "THIS IS A TEST")
+    return (
+      <ListGroup variant="flush">
+        <ListGroup.Item>{uploaded}</ListGroup.Item>
+      </ListGroup>
+    );
   }
 
   return (
@@ -200,7 +213,7 @@ const ContactForm = () => {
             <Form.Text className="text-muted">
               Please email <a href="mailto:info@iCustomStitch.com">info@iCustomStitch.com</a> directly
               if your files use more than 4MB.<br />
-              Current files attached: {listFiles(values.files)}
+              Current files attached: {listFiles()}
             </Form.Text>
             
           </Form.Group>

@@ -8,23 +8,12 @@ import { convert } from "./utils/form_utils";
 class FileDisplay extends React.Component {
   constructor(props) {
     super(props);
-    // this.deleteFile = this.deleteFile.bind(this);
-    console.log("Prop: ", props);
-    console.log("Prop file: ", props.file);
     this.objectUrl = URL.createObjectURL(props.file)
-    // this.state = {
-    //   justClicked: null,
-    //   letters: Array.from({length: 26}, (_, i) => String.fromCharCode(A + i))
-    // };
-  }
-
-  handleClick(e) {
-    this.setState({
-      justClicked: e.target.dataset.letter
-    });
+    console.log("Created objectURL for ", props.file.name, "at", this.objectUrl)
   }
 
   componentWillUnmount() {
+    console.log("Revoking:", this.objectUrl, this.props.file.name)
     URL.revokeObjectURL(this.objectUrl);
   }
 
@@ -36,14 +25,16 @@ class FileDisplay extends React.Component {
             <Row>
               <Col xs={4}>
                 <Image src={this.objectUrl} fluid/>
-                {console.log("objecturl", this.objectUrl)}
               </Col>
               <Col>
                 <div>{this.props.file.name}</div>
                 <div>Size: {convert(this.props.file.size)}</div>
               </Col>
               <Col xs={1}>
-                <Button variant="light" onClick={() => ReactDOM.flushSync(this.props.delete(this.props.file.name))}>
+                {/* <Button variant="light" onClick={() => ReactDOM.flushSync(this.props.delete(this.props.file.name))}>
+                  <ClearIcon />
+                </Button> */}
+                <Button variant="light" onClick={() => this.props.delete(this)}>
                   <ClearIcon />
                 </Button>
                 
