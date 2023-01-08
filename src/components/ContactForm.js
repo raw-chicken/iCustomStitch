@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Form, Button, InputGroup, ListGroup } from 'react-bootstrap';
 import ReCAPTCHA from "react-google-recaptcha";
 import { readFiles, convert, captcha } from "./utils/form_utils";
@@ -35,6 +35,8 @@ const ContactForm = () => {
   const [subject, setSubject] = useState("Custom Cross Stitch Inquiry");
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState([]);
+
+  const [disabled, setDisabled] = useState(false);
 
   const sendEmail = async (e) => {
     // console.log("Send email", e);
@@ -79,7 +81,7 @@ const ContactForm = () => {
   function listFiles() {
     // console.log("Files inside listFiles", files);
     function deleteFile(file) {
-      console.log("Trying to delete file", file)
+      // console.log("Trying to delete file", file)
       let temp_files = Array.from(files);
       let list = new DataTransfer();
 
@@ -121,7 +123,7 @@ const ContactForm = () => {
         recaptcha: '',
       }}
       onSubmit={(values, { resetForm }) => {
-        console.log("Values", values);
+        // console.log("Values", values);
         handleSubmit(values);
         resetForm();
       }}
@@ -129,13 +131,13 @@ const ContactForm = () => {
     >
       {({
         handleSubmit,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-        setFieldTouched,
-        values,
-        touched,
-        isValid,
+        // handleChange,
+        // handleBlur,
+        // setFieldValue,
+        // setFieldTouched,
+        // values,
+        // touched,
+        // isValid,
         errors,
       }) => (
         <Form noValidate onSubmit={handleSubmit} className="col-md-8">
@@ -202,8 +204,10 @@ const ContactForm = () => {
                   let size = 0;
                   Array.from(e.target.files).forEach(f => size += f.size);
                   setSize(size);
+                  setDisabled(true);
                 }}
                 isInvalid={!!errors.files || !!errors.size}
+                disabled={disabled}
               />
               <InputGroup.Text>{convert(size)} / {convert(MAX_SIZE)} </InputGroup.Text>
               <Form.Control.Feedback tooltip type="invalid">
@@ -213,7 +217,7 @@ const ContactForm = () => {
             <Form.Text className="text-muted">
               Please email <a href="mailto:info@iCustomStitch.com">info@iCustomStitch.com</a> directly
               if your files use more than 4MB.<br />
-              Current files attached: {listFiles()}
+              Current files attached &#40;please refresh to change&#41;: {listFiles()}
             </Form.Text>
             
           </Form.Group>

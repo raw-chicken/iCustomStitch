@@ -1,7 +1,5 @@
 import React from "react";
-import { Card, Stack, Container, Row, Col, Image, Button } from 'react-bootstrap';
-import ClearIcon from '@mui/icons-material/Clear';
-import * as ReactDOM from 'react-dom';
+import { Card, Stack, Container, Row, Col, Image } from 'react-bootstrap';
 
 import { convert } from "./utils/form_utils";
 
@@ -9,11 +7,11 @@ class FileDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.objectUrl = URL.createObjectURL(props.file)
-    console.log("Created objectURL for ", props.file.name, "at", this.objectUrl)
+    // console.log("Created objectURL for ", props.file.name, "at", this.objectUrl)
   }
 
   componentWillUnmount() {
-    console.log("Revoking:", this.objectUrl, this.props.file.name)
+    // console.log("Revoking:", this.objectUrl, this.props.file.name)
     URL.revokeObjectURL(this.objectUrl);
   }
 
@@ -34,9 +32,9 @@ class FileDisplay extends React.Component {
                 {/* <Button variant="light" onClick={() => ReactDOM.flushSync(this.props.delete(this.props.file.name))}>
                   <ClearIcon />
                 </Button> */}
-                <Button variant="light" onClick={() => this.props.delete(this)}>
+                {/* <Button variant="light" onClick={() => this.props.delete(this)}>
                   <ClearIcon />
-                </Button>
+                </Button> */}
                 
               </Col>
             </Row>

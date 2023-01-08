@@ -60,7 +60,7 @@ function Pricing() {
             </thead>
             <tbody>
               {table.map((chunk, idx) => (
-                <tr>
+                <tr key={idx}>
                   <td>{chunk[0]}</td>
                   <td>{chunk[1]}</td>
                   <td>{chunk[2]}</td>
