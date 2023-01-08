@@ -12,8 +12,11 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(formidable());
+app.use(require('prerender-node').set('prerenderToken', keys.prerender));
 app.use(express.json());
 app.use("/", router);
+
+
 app.listen(5000, () => console.log("Server Running"));
 
 const contactEmail = nodemailer.createTransport({
