@@ -50,7 +50,7 @@ function Pricing() {
           </Stack>
         </div>
         <div>
-          <div className='header mb-3'>Price Chart</div>
+          <div className='subheader mb-3'>Price Chart</div>
           <Table
             striped
             bordered
@@ -80,7 +80,7 @@ function Pricing() {
           </Table>
         </div>
         <div>
-        <div className='header mb-3'>Choosing The Right Size</div>
+        <div className='subheader mb-3'>Choosing The Right Size</div>
           <div className='mb-3'>
             The examples presented below gives an outline of what can be converted, however, to ensure
             that you are satisfied, reach out to us so that we can convert your photo and provide you a

@@ -27,6 +27,8 @@ function CustomStitch() {
             <Col xs={4} className="d-flex align-items-center justify-content-center">
               <Image
                 src={DogSample}
+                title="Sample Small Convertable Dog Image"
+                alt="convert dog photo to cross stitch"
                 width="75%"
               />
             </Col>
@@ -46,6 +48,8 @@ function CustomStitch() {
             <Col xs={4} className="d-flex align-items-center justify-content-center">
               <Image
                 src={DogSampleConverted}
+                title="Dog Converted to Cross Stitch Pattern"
+                alt="converted dog cross stitch pattern"
                 width="75%"
               />
             </Col>
@@ -65,6 +69,8 @@ function CustomStitch() {
             <Col xs={4} className="d-flex align-items-center justify-content-center">
               <Image
                 src={NeedleKit}
+                title="Needles with Stamped Kit"
+                alt="sample stamped cross stitched kit with needles"
                 width="75%"
               />
             </Col>
@@ -87,18 +93,21 @@ function CustomStitch() {
           </Row>
           <Row>
             <Container className='d-flex align-items-center justify-content-center'>
-            <Image 
-              className='my-4'
-              src={SampleKit}
-              width="75%"
-            />
+              <Image 
+                className='my-4'
+                src={SampleKit}
+                title="Sample Custom Stamped Cross Stitch Kit"
+                alt="sample stamped cross stitch kit with threads"
+                width="75%"
+              />
             </Container>
-            
           </Row>
           <Row className="my-3">
             <Col xs={4} className="d-flex align-items-center justify-content-center">
               <Image
                 src={WorldWideShipping}
+                title="Free World Wide Shipping"
+                alt="free global shipping"
                 width="60%"
               />
             </Col>
@@ -136,10 +145,14 @@ function CustomStitch() {
               <Stack gap={3}>
                 <Image
                   src={Threads}
+                  title="Included Thread Sorter and Threads"
+                  alt="stamped cross stitch kit thread sorter"
                   width="80%"
                 />
                 <Image
                   src={ChartSample}
+                  title="Sample Stamped Custom Cross Stitch Pattern"
+                  alt="converted stamped cross stitch pattern"
                   width="80%"
                 />
               </Stack>
@@ -167,6 +180,8 @@ function CustomStitch() {
               <Stack gap={3}>
                 <Image
                   src={FlowerGirl}
+                  title="Sample Cross Stitch Conversion Portrait"
+                  alt="convert portraits to cross stitch"
                   width="80%"
                 />
               </Stack>

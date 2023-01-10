@@ -43,11 +43,11 @@ function Home() {
             </Col>
           </Row>
         </Container>
-        <Container className='mb-6' id="learn-more">
-        <div className='header'>What do we do?</div>
+        <Container id="learn-more">
+          <div className='subheader'>What do we do?</div>
           <Row>
             <Col xs={9}>
-              <div className='mt-2 mb-3'>
+              <div className='mb-3'>
                 iCustomStitch makes it easy to create cross stitch custom patterns from any image that you want to cross stitch. We use
                 a proprietary algorithm to convert your image to a high quality pattern, produce a stamped kit, and provide you with all
                 of the needed tools to jump right into cross stitching, making it perfect for anyone from beginners to hobbyists. With the
@@ -84,7 +84,7 @@ function Home() {
           </Row>
         </Container>
         <Container>
-          <div className='header'>What is included?</div>
+          <div className='subheader'>What is included?</div>
           <Row>
             <Col xs={6}>
               <div className='mt-2 mb-2'>iCustomStitch is a custom cross stitch kit maker to
@@ -119,7 +119,7 @@ function Home() {
           </Row>
         </Container>
         <Container className="mt-6" >
-          <div className='header'>Testimonials</div>
+          <div className='subheader'>Testimonials</div>
           <Carousel className='mb-6 carousel-height' variant="dark">
             {testimonials.map((chunk, idx) => (
               <Carousel.Item key={idx} interval={2500}>
