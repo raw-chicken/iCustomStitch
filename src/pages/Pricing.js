@@ -43,13 +43,22 @@ function Pricing() {
             </div>
             <Image 
               src={SampleKit}
+              title="Sample iCustomStitch Custom Cross Stitch Kit"
+              alt="personalized stamped cross stitch kit"
               fluid
             />
           </Stack>
         </div>
         <div>
-          <div className='header mb-3'>Price Chart</div>
-          <Table striped bordered hover size="sm">
+          <div className='subheader mb-3'>Price Chart</div>
+          <Table
+            striped
+            bordered
+            hover
+            size="sm"
+            title="Custom Cross Stitch Price Chart"
+            alt="Stamped Custom Cross Stitch Kits Pricing"
+          >
             <thead>
               <tr>
                 <th>Size &#40;inches&#41;</th>
@@ -71,7 +80,7 @@ function Pricing() {
           </Table>
         </div>
         <div>
-        <div className='header mb-3'>Choosing The Right Size</div>
+        <div className='subheader mb-3'>Choosing The Right Size</div>
           <div className='mb-3'>
             The examples presented below gives an outline of what can be converted, however, to ensure
             that you are satisfied, reach out to us so that we can convert your photo and provide you a
@@ -83,10 +92,14 @@ function Pricing() {
             <Stack gap={3} direction='horizontal'>
               <Image 
                 src={BabySample}
+                title="Sample Small Convertable Baby Image from freepik"
+                alt="convert baby photos to cross stitch"
                 width="30%"
               />
               <Image 
                 src={CatSample}
+                title="Sample Small Convertable Cat Image"
+                alt="convert cat photos to cross stitch"
                 width="16%"
               />
               <div>
@@ -99,10 +112,14 @@ function Pricing() {
             <Stack gap={3} direction='horizontal'>
               <Image 
                 src={FullBodySample}
+                title="Sample Medium Convertable Portrait"
+                alt="convert portraits to cross stitch"
                 width="14%"
               />
               <Image 
                 src={TwoPeopleSample}
+                title="Sample Medium Convertable Lovers Portrait"
+                alt="convert couples photoshoot to cross stitch"
                 width="32%"
               />
               <div>
@@ -112,10 +129,14 @@ function Pricing() {
             <Stack gap={3} direction='horizontal'>
               <Image 
                 src={WeddingSample2}
+                title="Sample Large Convertable Bridesmaids Portrait"
+                alt="convert wedding photoshoot to cross stitch"
                 width="32%"
               />
               <Image 
                 src={WeddingSample1}
+                title="Sample Large Convertable Wedding Portraits"
+                alt="convert wedding photos to cross stitch"
                 width="14%"
               />
               <div>

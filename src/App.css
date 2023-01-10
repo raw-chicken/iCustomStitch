@@ -11,11 +11,12 @@ body {
   margin: 0;
 }
 
-.navbar-text { font-family: Lato; font-size: 16px; font-style: normal; font-weight: 400; line-height: 30px;}
-.fancy { font-family: Amatic SC; font-size: 50px; font-style: normal; font-variant: bold; font-weight: 700; line-height: 50px; } 
-.header { font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 35px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 45px; }
-.subheader { font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 30px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 40px; }
-.step { font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 20px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 35px; }
+.navbar-text { font-family: Lato; font-size: 1rem; font-style: normal; font-weight: 400; line-height: 1.75rem;}
+.fancy { font-family: Amatic SC; font-size: 3.12rem; font-style: normal; font-variant: bold; font-weight: 700; line-height: 3.12rem; } 
+.header { font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 2rem; font-style: normal; font-variant: normal; font-weight: 700; line-height: 2.81rem; }
+.subheader { font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 1.7rem; font-style: normal; font-variant: normal; font-weight: 700; line-height: 2.5rem; }
+.step { font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 20px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 2.19rem; }
+/* .question { font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 20px; font-style: bold; font-variant: bold; font-weight: 700; line-height: 35px; } */
 /* .body { font-family: Petrona; font-size: 35px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 45px; } */
 /* ah3 { font-family: Amatic SC; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 23px; } 
 ap { font-family: Amatic SC; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } 
@@ -30,6 +31,14 @@ ul.no-bullets {
 
 .carousel-height {
   min-height: 50vh;
+}
+
+@media (max-width: 900px) {
+  html { font-size: 16px; }
+}
+
+@media (max-width: 400px) {
+  html { font-size: 12px; }
 }
 
 
